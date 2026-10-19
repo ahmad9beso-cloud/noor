@@ -63,6 +63,9 @@ class Prefs(context: Context) {
 
     val methodEnum: Method get() = Method.entries.getOrElse(method) { Method.MWL }
 
+    // Kotlin also generates a JVM setter for every property below (name = "set" + property name).
+    // Where a setter function here would get the same JVM signature, @JvmName gives it another JVM name;
+    // Kotlin callers still call it by its normal name.
     fun setTheme(v: Int) {
         themeMode = v
         sp.edit().putInt("theme", v).apply()
@@ -73,6 +76,7 @@ class Prefs(context: Context) {
         sp.edit().putBoolean("east", v).apply()
     }
 
+    @JvmName("applyClockFormat")
     fun setClockFormat(v: Int) {
         clockFormat = v
         sp.edit().putInt("clock", v).apply()
@@ -83,32 +87,38 @@ class Prefs(context: Context) {
         sp.edit().putBoolean("paged", v).apply()
     }
 
+    @JvmName("applyLastPage")
     fun setLastPage(v: Int) {
         if (v == lastPage) return
         lastPage = v
         sp.edit().putInt("lastPage", v).apply()
     }
 
+    @JvmName("applyMethod")
     fun setMethod(v: Int) {
         method = v
         sp.edit().putInt("method", v).apply()
     }
 
+    @JvmName("applyHanafi")
     fun setHanafi(v: Boolean) {
         hanafi = v
         sp.edit().putBoolean("hanafi", v).apply()
     }
 
+    @JvmName("applyHijriAdjust")
     fun setHijriAdjust(v: Int) {
         hijriAdjust = v.coerceIn(-2, 2)
         sp.edit().putInt("hijriAdj", hijriAdjust).apply()
     }
 
+    @JvmName("applyNotifyMask")
     fun setNotifyMask(v: Int) {
         notifyMask = v
         sp.edit().putInt("notify", v).apply()
     }
 
+    @JvmName("applyPlace")
     fun setPlace(p: Place?) {
         place = p
         val e = sp.edit()
