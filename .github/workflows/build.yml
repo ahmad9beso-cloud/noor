@@ -38,6 +38,10 @@ jobs:
             echo "No KEYSTORE_BASE64 secret: signing with the debug key."
           fi
 
+      # Uploads through the website or a zip drop the executable bit of gradlew.
+      - name: Make gradlew executable
+        run: chmod +x gradlew
+
       - name: Build release APK (arm64)
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
